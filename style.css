@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+  text-decoration: none;
+}
+
+body {
+  height: 100vh;
+  background-color: #333;
+}
+
+header {
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
+
+main aside {
+  flex-grow: 1;
+}
+
+#west-menu, #east-menu {
+  display: flex;
+  flex-direction: column;
+  margin-inline: 20px;
+}
+
+#game-frame {
+  width: 980px;
+  height: 600px;
+  position: relative;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+}
+
+#south-menu {
+  height: 80px;
+}
+
+.menu button, .menu .button {
+  text-align: center;
+  color: #6fd1f5;
+  font-family: "Alien Energy", monospace;
+  font-size: 2em;
+  padding: .4em;
+  border-radius: 4px;
+  border: solid 4px #6fd1f5;
+  background: none;
+  cursor: pointer;
+  margin: 4px;
+}
+
+.menu button:focus, .menu button:hover,
+.menu .button:focus, .menu .button:hover {
+  box-shadow: 0 0 2px 2px #6fd1f5A0,
+  0 0 4px 4px #FFFFFFA0,
+  inset 0 0 1px 1px #6fd1f5A0,
+  inset 0 0 2px 2px #FFFFFFA0;
+  text-shadow: 0 0 8px #6fd1f5A0;
+}
+
+.menu button:active {
+  color: black;
+  border: solid 4px black;
+  background-color: #6fd1f5;
+}

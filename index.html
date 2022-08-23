@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vite App</title>
+    <script src="https://pixijs.download/release/pixi.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+    <link href="https://fonts.cdnfonts.com/css/alien-energy" rel="stylesheet">
+</head>
+<body>
+<header>Header <span style="color: yellow; font-weight: bold" id="fps">0</span></header>
+<main>
+    <aside id="west-menu" class="menu">
+        <button onclick="init()">New Game</button>
+        <a class="button" href="map-editor/">Map editor</a>
+    </aside>
+    <div>
+        <div id="game-frame">
+            <section class="layer" id="game"></section>
+            <section class="layer" id="obstacle"></section>
+            <section class="layer" id="player"></section>
+        </div>
+        <section id="south-menu" class="mini-menu">Menu</section>
+    </div>
+    <aside id="east-menu" class="menu">
+        <button id="secondary">Inventory</button>
+        <button onclick="toggleOpacity('game')">Toggle terrain</button>
+        <button onclick="toggleOpacity('obstacle')">Toggle obstacles</button>
+        <button onclick="toggleOpacity('player')">Toggle player</button>
+    </aside>
+</main>
+<footer>Footer</footer>
+
+<script type="module">
+    import World from "./engine/world/world.js";
+
+    let game
+    let init = false
+
+    const initGame = () => {
+        if (init) return
+        init = true
+        game = new PIXI.Application({ width: 980, height: 600, backgroundAlpha: 0})
+
+        const world = new World(49, 30)
+
+        world.getLayers().forEach(layer => {
+            game.stage.addChild(layer)
+        })
+
+        let keys = {
+            z: false,
+            q: false,
+            s: false,
+            d: false,
+        }
+
+        let currentFrame = 0
+        let lock = -1
+
+        window.addEventListener("keydown", (e) => {
+            if (lock === -1)
+            lock = currentFrame
+            keys[e.key] = true
+        })
+
+        window.addEventListener("keyup", (e) => {
+            keys[e.key] = false
+        })
+
+        document.getElementById("game").appendChild(game.view)
+
+        game.ticker.add(_ => {
+            if (currentFrame === lock)
+                world.playerMove(keys)
+            else if (currentFrame === 30) {
+                currentFrame = 0
+            }
+            currentFrame++
+        })
+    }
+
+    document.getElementById("secondary").addEventListener("click", initGame)
+</script>
+
+<script>
+
+    const toggleOpacity = (layer) => {
+        const op = document.getElementById(layer).style.opacity
+        document.getElementById(layer).style.opacity = op === "0" ? "1" : "0"
+    }
+
+    let currentFrame = -1
+    let sFrameRate = 60
+    const S = 0
+    const W = 1
+    const E = 2
+    const N = 3
+
+    let running = false
+    let app = null
+    let direction = null
+
+    const map = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 8, 8, 6, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 6, 6, 6, 6, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 8, 6, 6, 6, 6, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 8, 8, 6, 6, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 3, 0, 0, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 6, 6, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 1, 0, 3, 3, 3, 3, 2, 2, 0, 0, 0, 1, 8, 8, 8, 8, 8, 6, 6, 6, 6, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 1, 3, 3, 3, 3, 2, 2, 2, 2, 0, 0, 1, 1, 0, 8, 8, 8, 8, 6, 6, 6, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 1, 3, 3, 3, 2, 2, 2, 2, 0, 0, 0, 1, 0, 8, 8, 8, 8, 8, 6, 6, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 3, 3, 1, 1, 3, 3, 2, 2, 2, 2, 2, 0, 0, 1, 1, 8, 8, 8, 8, 8, 6, 6, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 3, 3, 3, 1, 1, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1, 1, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 1, 1, 1, 8, 8, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 1, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 3, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1, 1, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 1, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 1, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 3, 3, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 3, 3, 3, 3, 2, 2, 0, 2, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 2, 2, 2, 2, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]
+
+    const walkableMap = new Map()
+
+    const spriteData = {
+        frames: {
+            grass: {
+                frame: {x: 0, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+                walkable: true
+            },
+            dirt: {
+                frame: {x: 20, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+                walkable: true
+            },
+            water: {
+                frame: {x: 40, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+                walkable: false
+            },
+            sand: {
+                frame: {x: 60, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+                walkable: true
+            },
+            concrete: {
+                frame: {x: 80, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+                walkable: true
+            },
+            snow: {
+                frame: {x: 100, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+                walkable: true
+            },
+            lava: {
+                frame: {x: 120, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+                walkable: false
+            },
+            brick: {
+                frame: {x: 140, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+                walkable: false
+            },
+            stone: {
+                frame: {x: 160, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+                walkable: false
+            },
+            fence: {
+                frame: {x: 180, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+                walkable: false
+            },
+        },
+        meta: {
+            image: 'assets/sprites/terrain/base.png',
+            format: 'RGBA8888',
+            size: {w: 200, h: 20},
+            scale: 1
+        }
+    }
+    const walkableData = {
+        frames: {
+            true: {
+                frame: {x: 0, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            false: {
+                frame: {x: 20, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20},
+            }
+        },
+        meta: {
+            image: 'assets/sprites/terrain/walkable.png',
+            format: 'RGBA8888',
+            size: {w: 40, h: 20},
+            scale: 1
+        }
+    }
+
+    const characterData = {
+        frames: {
+            idle: {
+                frame: {x: 0, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_south1: {
+                frame: {x: 0, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_south2: {
+                frame: {x: 20, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_south3: {
+                frame: {x: 40, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_south4: {
+                frame: {x: 60, y: 0, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_west1: {
+                frame: {x: 0, y: 20, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_west2: {
+                frame: {x: 20, y: 20, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_west3: {
+                frame: {x: 40, y: 20, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_west4: {
+                frame: {x: 60, y: 20, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_east1: {
+                frame: {x: 0, y: 40, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_east2: {
+                frame: {x: 20, y: 40, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_east3: {
+                frame: {x: 40, y: 40, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_east4: {
+                frame: {x: 60, y: 40, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_north1: {
+                frame: {x: 0, y: 60, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_north2: {
+                frame: {x: 20, y: 60, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_north3: {
+                frame: {x: 40, y: 60, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            },
+            walk_north4: {
+                frame: {x: 60, y: 60, w: 20, h: 20},
+                sourceSize: {w: 20, h: 20},
+                spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+            }
+        },
+        meta: {
+            image: 'assets/sprites/character/player.png',
+            format: 'RGBA8888',
+            size: {w: 80, h: 80},
+            scale: 1
+        },
+        animations: {
+            walk_south: ['walk_south1', 'walk_south2', 'walk_south3', 'walk_south4'],
+            walk_west: ['walk_west1', 'walk_west2', 'walk_west3', 'walk_west4'],
+            walk_east: ['walk_east1', 'walk_east2', 'walk_east3', 'walk_east4'],
+            walk_north: ['walk_north1', 'walk_north2', 'walk_north3', 'walk_north4'],
+        }
+    }
+
+    const textureMap = Object.entries(spriteData.frames).map((it) => it[0])
+
+    const initPlayer = async () => {
+        let sprite
+
+        const pos = {
+            x: 0,
+            y: 0
+        }
+
+        const mapPos = {
+            x: 0,
+            y: 0
+        }
+
+        const spritesheet = new PIXI.Spritesheet(
+            PIXI.BaseTexture.from(characterData.meta.image),
+            characterData
+        )
+
+        let walkSouth, walkWest, walkEast, walkNorth, idle
+
+        await spritesheet.parse().then(_ => {
+            walkSouth = new PIXI.AnimatedSprite(spritesheet.animations.walk_south)
+            walkWest = new PIXI.AnimatedSprite(spritesheet.animations.walk_west)
+            walkEast = new PIXI.AnimatedSprite(spritesheet.animations.walk_east)
+            walkNorth = new PIXI.AnimatedSprite(spritesheet.animations.walk_north)
+            idle = new PIXI.Sprite.from(spritesheet.textures.idle)
+        })
+
+        const playerApp = new PIXI.Application({width: 980, height: 600, backgroundAlpha: 0})
+        document.getElementById("player").appendChild(playerApp.view)
+
+        const moveSouth = () => {
+            try {
+                const next = `${mapPos.x}:${mapPos.y}`
+                console.log(`Player is at ${mapPos.x}:${mapPos.y} ; watching pixel ${next}`)
+                if (walkableMap.get(next) && pos.y < 599) {
+                    sprite = walkSouth
+                    pos.y ++
+                }
+            } catch (_) {
+            }
+        }
+
+        const moveWest = () => {
+            try {
+                const next = `${mapPos.x}:${mapPos.y}`
+                console.log(`Player is at ${mapPos.x}:${mapPos.y} ; watching pixel ${next}`)
+                if (walkableMap.get(next) && pos.x > 0) {
+                    sprite = walkWest
+                    pos.x --
+                }
+            } catch (_) {
+            }
+        }
+
+        const moveEast = () => {
+            const next = `${mapPos.x}:${mapPos.y}`
+            console.log(`Player is at ${mapPos.x}:${mapPos.y} ; watching pixel ${next}`)
+            try {
+                if (walkableMap.get(next) && pos.x < 979) {
+                    sprite = walkEast
+                    pos.x ++
+                }
+            } catch (_) {
+            }
+        }
+
+        const moveNorth = () => {
+            const next = `${Math.floor((pos.x + 10) / 20)}:${Math.floor((pos.y + 10) / 20) - 1}`
+            console.log(`Player is at ${mapPos.x}:${mapPos.y} ; watching pixel ${next}`)
+            try {
+                if (walkableMap.get(next) && pos.y > 0) {
+                    sprite = walkNorth
+                    pos.y --
+                }
+            } catch (_) {
+            }
+        }
+
+        playerApp.ticker.add(delta => {
+            currentFrame++
+            if (sprite) playerApp.stage.removeChild(sprite)
+            switch (direction) {
+                case S:
+                    moveSouth();
+                    break
+                case W:
+                    moveWest();
+                    break
+                case E:
+                    moveEast();
+                    break
+                case N:
+                    moveNorth();
+                    break
+                default:
+                    sprite = idle;
+                    break
+            }
+                sprite.x = pos.x
+                sprite.y = pos.y
+                mapPos.x = Math.floor(pos.x / 20)
+                mapPos.y = Math.floor(pos.y / 20)
+                if (sprite !== idle) {
+                    sprite.animationSpeed = 4 * (1 / sFrameRate)
+                    sprite.play()
+                }
+                playerApp.stage.addChild(sprite)
+        })
+    }
+    let moving = -1
+
+    const init = async () => {
+        const spritesheet = new PIXI.Spritesheet(
+            PIXI.BaseTexture.from(spriteData.meta.image),
+            spriteData
+        )
+
+        const walkableSS = new PIXI.Spritesheet(
+            PIXI.BaseTexture.from(walkableData.meta.image),
+            walkableData
+        )
+
+        await spritesheet.parse()
+        await walkableSS.parse()
+
+
+        app = new PIXI.Application({width: 980, height: 600, resolution: window.devicePixelRatio})
+        const walkableLayer = new PIXI.Application({width: 980, height: 600, backgroundAlpha: 0})
+        document.getElementById("game").appendChild(app.view)
+        document.getElementById("obstacle").appendChild(walkableLayer.view)
+        running = true
+
+        map.forEach((line, y) => {
+            line.forEach((square, x) => {
+                const sprite = new PIXI.Sprite.from(spritesheet.textures[textureMap[square]])
+
+                sprite.x = x * sprite.width
+                sprite.y = y * sprite.height
+                app.stage.addChild(sprite)
+
+                const isWalkable = spriteData.frames[textureMap[square]].walkable
+                walkableMap.set(`${x}:${y}`, isWalkable)
+
+                const walkableSprite = new PIXI.Sprite(walkableSS.textures[isWalkable.toString()])
+                walkableSprite.x = sprite.x
+                walkableSprite.y = sprite.y
+                walkableLayer.stage.addChild(walkableSprite)
+            })
+        })
+        await initPlayer()
+
+        window.addEventListener("keydown", (e) => {
+            switch (e.key) {
+                case "s":
+                    moving = currentFrame;
+                    direction = S;
+                    break
+                case "q":
+                    moving = currentFrame;
+                    direction = W;
+                    break
+                case "d":
+                    moving = currentFrame;
+                    direction = E;
+                    break
+                case "z":
+                    moving = currentFrame;
+                    direction = N;
+                    break
+                default:
+                    break
+            }
+        })
+
+        window.addEventListener("keyup", (e) => {
+            switch (e.key) {
+                case "s":
+                    direction = direction === S ? null : direction;
+                    break
+                case "q":
+                    direction = direction === W ? null : direction;
+                    break
+                case "d":
+                    direction = direction === E ? null : direction;
+                    break
+                case "z":
+                    direction = direction === N ? null : direction;
+                    break
+                default:
+                    break
+            }
+        })
+
+        setInterval(() => {
+            document.getElementById("fps").innerText = currentFrame.toString()
+            sFrameRate = currentFrame
+            currentFrame = 0
+            moving = -1
+        }, 1000)
+    }
+</script>
+</body>
+</html>
