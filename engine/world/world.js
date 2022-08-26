@@ -1,41 +1,9 @@
 import Player from "./player";
 import TerrainContainer from "../layers/terrain.js";
 import PlayerContainer from "../layers/player.js";
+import {Level} from "../../data/levels/levels.js";
 
 export default class World {
-
-    level = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 8, 8, 6, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 6, 6, 6, 6, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 8, 6, 6, 6, 6, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 8, 8, 6, 6, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 3, 0, 0, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 6, 6, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 1, 0, 3, 3, 3, 3, 2, 2, 0, 0, 0, 1, 8, 8, 8, 8, 8, 6, 6, 6, 6, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 1, 3, 3, 3, 3, 2, 2, 2, 2, 0, 0, 1, 1, 0, 8, 8, 8, 8, 6, 6, 6, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 1, 3, 3, 3, 2, 2, 2, 2, 0, 0, 0, 1, 0, 8, 8, 8, 8, 8, 6, 6, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 3, 3, 1, 1, 3, 3, 2, 2, 2, 2, 2, 0, 0, 1, 1, 8, 8, 8, 8, 8, 6, 6, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 3, 3, 3, 1, 1, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1, 1, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 1, 1, 1, 8, 8, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 1, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 3, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1, 1, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 1, 1, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 1, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 3, 3, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 3, 3, 3, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 3, 3, 3, 3, 2, 2, 0, 2, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 2, 2, 2, 2, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ]
-
     map
     player
     layers = {}
@@ -49,30 +17,34 @@ export default class World {
     init = async (width, height, layers) => {
         this.map = new Map()
         this.terrainLayer = new TerrainContainer()
+        this.layers["bg"] = this.terrainLayer.getBackground()
         this.layers["terrain"] = this.terrainLayer.getContainer()
         this.playerLayer = new PlayerContainer()
         this.layers["player"] = this.playerLayer.getContainer()
 
         await this.terrainLayer.ready()
-        await this.terrainLayer.loadMap(this.level)
+        const level = new Level("level2")
+        await this.terrainLayer.loadMap(level)
         await this.playerLayer.ready()
 
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
                 this.map.set(`${x}:${y}`, {
-                    texture: "grass",
                     walkable: true
                 })
             }
         }
 
-        this.player = new Player(Math.floor(width / 2), Math.floor(height / 2))
+        this.player = new Player(level.getPlayer().x, level.getPlayer().y)
         this.ghost = this.clone(this.player)
 
         this.playerLayer.idle().x = this.player.pos.x * 20
         this.playerLayer.idle().y = this.player.pos.y * 20
 
-        this.editMap(2, 10, {walkable: false})
+        this.terrainLayer.obstacles.forEach(obstacle => {
+            if (obstacle.walkable === false)
+                this.editMap(obstacle.x, obstacle.y, {walkable: obstacle.walkable})
+        })
 
         setInterval(() => {
             if (!this.player.equals(this.ghost)) {
@@ -92,6 +64,8 @@ export default class World {
     }
 
     clone = (o) => Object.assign(Object.create(Object.getPrototypeOf(o)), o)
+
+    getBackground = () => this.terrainLayer.getBackground()
 
     getLayers = () => Object.values(this.layers)
 
@@ -124,12 +98,46 @@ export default class World {
         }, 25)
     }
 
+    moveLayers = (direction) => {
+        this.getLayers().forEach(layer => {
+            let i = 0
+
+            const int = setInterval(() => {
+                switch (direction) {
+                    case "left":
+                        layer.x++;
+                        break;
+                    case "right":
+                        layer.x--;
+                        break;
+                    case "up":
+                        layer.y++;
+                        break;
+                    case "down":
+                        layer.y--;
+                        break;
+                }
+                i++
+                if (i > 19) clearInterval(int)
+            }, 25)
+        })
+    }
+
     playerMoveLeft = () => {
         const sprite = this.playerLayer.animateLeft()
 
-        if (this.playerAbsoluteMove(this.player.pos.x - 1, this.player.pos.y))
+        if (this.playerAbsoluteMove(this.player.pos.x - 1, this.player.pos.y)) {
             this.playerSpriteMove(sprite, {
                 x: this.player.pos.x + 1,
+                y: this.player.pos.y
+            }, {
+                x: this.player.pos.x,
+                y: this.player.pos.y
+            })
+            this.moveLayers("left")
+        } else
+            this.playerSpriteMove(sprite, {
+                x: this.player.pos.x,
                 y: this.player.pos.y
             }, {
                 x: this.player.pos.x,
@@ -140,9 +148,18 @@ export default class World {
     playerMoveRight = () => {
         const sprite = this.playerLayer.animateRight()
 
-        if (this.playerAbsoluteMove(this.player.pos.x + 1, this.player.pos.y))
+        if (this.playerAbsoluteMove(this.player.pos.x + 1, this.player.pos.y)) {
             this.playerSpriteMove(sprite, {
                 x: this.player.pos.x - 1,
+                y: this.player.pos.y
+            }, {
+                x: this.player.pos.x,
+                y: this.player.pos.y
+            })
+            this.moveLayers("right")
+        } else
+            this.playerSpriteMove(sprite, {
+                x: this.player.pos.x,
                 y: this.player.pos.y
             }, {
                 x: this.player.pos.x,
@@ -153,10 +170,19 @@ export default class World {
     playerMoveUp = () => {
         const sprite = this.playerLayer.animateUp()
 
-        if (this.playerAbsoluteMove(this.player.pos.x, this.player.pos.y - 1))
+        if (this.playerAbsoluteMove(this.player.pos.x, this.player.pos.y - 1)) {
             this.playerSpriteMove(sprite, {
                 x: this.player.pos.x,
                 y: this.player.pos.y + 1
+            }, {
+                x: this.player.pos.x,
+                y: this.player.pos.y
+            })
+            this.moveLayers("up")
+        } else
+            this.playerSpriteMove(sprite, {
+                x: this.player.pos.x,
+                y: this.player.pos.y
             }, {
                 x: this.player.pos.x,
                 y: this.player.pos.y
@@ -166,10 +192,19 @@ export default class World {
     playerMoveDown = () => {
         const sprite = this.playerLayer.animateDown()
 
-        if (this.playerAbsoluteMove(this.player.pos.x, this.player.pos.y + 1))
+        if (this.playerAbsoluteMove(this.player.pos.x, this.player.pos.y + 1)) {
             this.playerSpriteMove(sprite, {
                 x: this.player.pos.x,
                 y: this.player.pos.y - 1
+            }, {
+                x: this.player.pos.x,
+                y: this.player.pos.y
+            })
+            this.moveLayers("down")
+        } else
+            this.playerSpriteMove(sprite, {
+                x: this.player.pos.x,
+                y: this.player.pos.y
             }, {
                 x: this.player.pos.x,
                 y: this.player.pos.y

@@ -7,223 +7,230 @@
     <link href="https://fonts.cdnfonts.com/css/alien-energy" rel="stylesheet">
 </head>
 <body>
-    <header>Header</header>
-    <nav style="background-color: white">
-<!--        <button onclick="selectTool('fill')">Fill</button>-->
-        <button onclick="selectTool('rectangle')">Rectangle</button>
-        <button onclick="selectTool('pen')">Pen</button>
-        <span id="terrain-selector"></span>
-    </nav>
-    <p>Tool: <span id="selected-tool"></span></p>
+<header>Header</header>
+<nav style="background-color: white">
+    <!--        <button onclick="selectTool('fill')">Fill</button>-->
+    <button onclick="selectTool('rectangle')">Rectangle</button>
+    <button onclick="selectTool('pen')">Pen</button>
+    <span id="terrain-selector"></span>
+</nav>
+<p>Tool: <span id="selected-tool"></span></p>
 
-    <div style="display: flex">
-        <canvas height="600" width="980" id="map" style="background-color: transparent"></canvas>
-        <div id="minimap" style="background-color: #6fd1f5; font-size: 0.8em; overflow: auto; max-width: 800px;"></div>
-    </div>
+<div style="display: flex">
+    <canvas height="600" width="980" id="map" style="background-color: transparent"></canvas>
+    <div id="minimap" style="background-color: #6fd1f5; font-size: 0.8em; overflow: auto; max-width: 800px;"></div>
+</div>
 
-    <script>
-        const selectedToolElement = document.getElementById("selected-tool")
-        const terrainSelectorElement = document.getElementById("terrain-selector")
-        const mapElement = document.getElementById("map")
-        const minimapElement = document.getElementById("minimap")
-        const context = mapElement.getContext('2d')
-        const rect = mapElement.getBoundingClientRect()
+<script>
+    const selectedToolElement = document.getElementById("selected-tool")
+    const terrainSelectorElement = document.getElementById("terrain-selector")
+    const mapElement = document.getElementById("map")
+    const minimapElement = document.getElementById("minimap")
+    const context = mapElement.getContext('2d')
+    const rect = mapElement.getBoundingClientRect()
 
 
-        let tool, texture, x, y, x1, y1
-        let drawing = false
+    let tool, texture, x, y, x1, y1
+    let drawing = false
 
-        function rgbToHex(r, g, b) {
-            if (r > 255 || g > 255 || b > 255)
-                throw "Invalid color component";
-            return ((r << 16) | (g << 8) | b).toString(16);
+    function rgbToHex(r, g, b) {
+        if (r > 255 || g > 255 || b > 255)
+            throw "Invalid color component";
+        return ((r << 16) | (g << 8) | b).toString(16);
+    }
+
+    const fillMode = {
+        name: "Fill mode",
+        handlers: {
+            click: (e) => {
+                x = e.clientX - rect.left
+                y = e.clientY - rect.top
+                var p = context.getImageData(x, y, 1, 1).data;
+                var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+                console.log(hex);
+            }
         }
-
-        const fillMode = {
-            name: "Fill mode",
-            handlers: {
-                click: (e) => {
+    }
+    const rectangleMode = {
+        name: "Rectangle mode",
+        handlers: {
+            mousedown: (e) => {
+                x = e.clientX - rect.left
+                y = e.clientY - rect.top
+                drawing = true
+            },
+            mousemove: (e) => {
+                if (drawing) {
+                    x1 = e.clientX - rect.left
+                    y1 = e.clientY - rect.top
+                }
+            },
+            mouseup: (e) => {
+                if (drawing) {
+                    x1 = e.clientX - rect.left
+                    y1 = e.clientY - rect.top
+                    drawRect(context, x, y, x1, y1, texture)
+                    x = 0
+                    y = 0
+                    x1 = 0
+                    y1 = 0
+                    drawing = false
+                }
+                updateMinimap()
+            }
+        }
+    }
+    const penMode = {
+        name: "Pen mode",
+        handlers: {
+            mousedown: (e) => {
+                x = e.clientX - rect.left
+                y = e.clientY - rect.top
+                drawing = true
+            },
+            mousemove: (e) => {
+                if (drawing) {
+                    drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top, texture)
                     x = e.clientX - rect.left
                     y = e.clientY - rect.top
-                    var p = context.getImageData(x, y, 1, 1).data;
-                    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-                    console.log(hex);
+                }
+            },
+            mouseup: (e) => {
+                if (drawing) {
+                    drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top, texture)
+                    x = 0
+                    y = 0
+                    drawing = false
+                    updateMinimap()
                 }
             }
         }
-        const rectangleMode = {
-            name: "Rectangle mode",
-            handlers: {
-                mousedown: (e) => {
-                    x = e.clientX - rect.left
-                    y = e.clientY - rect.top
-                    drawing = true
-                },
-                mousemove: (e) => {
-                    if (drawing) {
-                        x1 = e.clientX - rect.left
-                        y1 = e.clientY - rect.top
-                    }
-                },
-                mouseup: (e) => {
-                    if (drawing) {
-                        x1 = e.clientX - rect.left
-                        y1 = e.clientY - rect.top
-                        drawLine(context, x, y, x, y1, texture)
-                        drawLine(context, x, y1, x1, y1, texture)
-                        drawLine(context, x1, y1, x1, y, texture)
-                        drawLine(context, x1, y, x, y, texture)
-                        x = 0
-                        y = 0
-                        x1 = 0
-                        y1 = 0
-                        drawing = false
-                    }
-                }
-            }
-        }
-        const penMode = {
-            name: "Pen mode",
-            handlers: {
-                mousedown: (e) => {
-                    x = e.clientX - rect.left
-                    y = e.clientY - rect.top
-                    drawing = true
-                },
-                mousemove: (e) => {
-                    if (drawing) {
-                        drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top, texture)
-                        x = e.clientX - rect.left
-                        y = e.clientY - rect.top
-                    }
-                },
-                mouseup: (e) => {
-                    if (drawing) {
-                        drawLine(context, x, y, e.clientX - rect.left, e.clientY - rect.top, texture)
-                        x = 0
-                        y = 0
-                        drawing = false
-                        updateMinimap()
-                    }
-                }
-            }
-        }
+    }
 
-        const modes = {
-            //fill: fillMode,
-            rectangle: rectangleMode,
-            pen: penMode,
+    const modes = {
+        //fill: fillMode,
+        rectangle: rectangleMode,
+        pen: penMode,
+    }
+
+    const textures = {
+        grass: {
+            color: "#008000"
+        },
+        dirt: {
+            color: "#8d6809"
+        },
+        water: {
+            color: "#00ffff"
+        },
+        sand: {
+            color: "#ffff00"
+        },
+        concrete: {
+            color: "#c0c0c0"
+        },
+        snow: {
+            color: "#ffffff"
+        },
+        lava: {
+            color: "#ff6a00"
+        },
+        brick: {
+            color: "#ffc263"
+        },
+        stone: {
+            color: "#5b5757"
+        },
+        fence: {
+            color: "#DABE9A7B"
         }
+    }
 
-        const textures = {
-            grass: {
-                color: "#008000"
-            },
-            dirt: {
-                color: "#8d6809"
-            },
-            water: {
-                color: "#00ffff"
-            },
-            sand: {
-                color: "#ffff00"
-            },
-            concrete: {
-                color: "#c0c0c0"
-            },
-            snow: {
-                color: "#ffffff"
-            },
-            lava: {
-                color: "#ff6a00"
-            },
-            brick: {
-                color: "#ffc263"
-            },
-            stone: {
-                color: "#5b5757"
-            },
-            fence: {
-                color: "#DABE9A7B"
-            }
-        }
+    terrainSelectorElement.innerHTML = ""
+    const buttons = []
 
-        terrainSelectorElement.innerHTML = ""
-        const buttons = []
-
-        Object.keys(textures).forEach(k => {
-            const button = document.createElement("button")
-            button.innerText = k
-            button.addEventListener("click", () => {
-                selectTexture(k)
-            })
-            button.style.backgroundColor = textures[k].color
-            buttons.push(button)
+    Object.keys(textures).forEach(k => {
+        const button = document.createElement("button")
+        button.innerText = k
+        button.addEventListener("click", () => {
+            selectTexture(k)
         })
-        terrainSelectorElement.append(...buttons)
+        button.style.backgroundColor = textures[k].color
+        buttons.push(button)
+    })
+    terrainSelectorElement.append(...buttons)
 
-        const updateMinimap = () => {
-            let html = ""
-            console.clear()
+    const updateMinimap = () => {
+        let html = ""
+        console.clear()
 
-            for (let _y = 0; _y < 600; _y += 20) {
-                const line = []
-                for (let _x = 0; _x < 980; _x += 20) {
-                    const p = context.getImageData(_x, _y, 1, 1).data;
-                    const hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-                    let t
+        for (let _y = 0; _y < 600; _y += 20) {
+            const line = []
+            for (let _x = 0; _x < 980; _x += 20) {
+                const p = context.getImageData(_x, _y, 1, 1).data;
+                const hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+                let t
 
-                    switch (hex) {
+                switch (hex) {
 
-                    }
-                    line.push(Object.values(textures).map(it=>it.color).indexOf(hex))
                 }
-                html += `[${line.join(",")}], <br />`
+                line.push(Object.values(textures).map(it => it.color).indexOf(hex))
             }
-            minimapElement.innerHTML = `[${html}]`
+            html += `[${line.join(",")}], <br />`
         }
+        minimapElement.innerHTML = `[${html}]`
+    }
 
-        const drawLine = (context, x1, y1, x2, y2, texture) => {
-            context.beginPath();
-            context.fillStyle = texture.color
-            context.moveTo(Math.floor(x1 / 20) * 20, Math.floor(y1 / 20) * 20);
-            context.lineTo(Math.floor(x1 / 20) * 20, Math.floor(y2 / 20) * 20 + 20);
-            context.lineTo(Math.floor(x2 / 20) * 20 + 20, Math.floor(y2 / 20) * 20 + 20);
-            context.lineTo(Math.floor(x2 / 20) * 20 + 20, Math.floor(y1 / 20) * 20);
-            context.lineTo(Math.floor(x1 / 20) * 20, Math.floor(y1 / 20) * 20);
-            context.fill()
-            context.closePath();
-        }
+    const drawLine = (context, x1, y1, x2, y2, texture) => {
+        context.beginPath();
+        context.fillStyle = texture.color
+        context.moveTo(Math.floor(x1 / 20) * 20, Math.floor(y1 / 20) * 20);
+        context.lineTo(Math.floor(x1 / 20) * 20, Math.floor(y2 / 20) * 20 + 20);
+        context.lineTo(Math.floor(x2 / 20) * 20 + 20, Math.floor(y2 / 20) * 20 + 20);
+        context.lineTo(Math.floor(x2 / 20) * 20 + 20, Math.floor(y1 / 20) * 20);
+        context.lineTo(Math.floor(x1 / 20) * 20, Math.floor(y1 / 20) * 20);
+        context.fill()
+        context.closePath();
+    }
 
-        const selectTool = (name) => {
+    const drawRect = (context, x1, y1, x2, y2, texture) => {
+        context.beginPath();
+        context.fillStyle = texture.color
+        context.moveTo(Math.floor(x1 / 20) * 20, Math.floor(y1 / 20) * 20);
+        context.rect(Math.floor(x1 / 20) * 20, Math.floor(y1 / 20) * 20, x2 - x1 + 20, y2  - y1 + 20);
+        context.fill()
+        context.closePath();
+    }
 
-            if (tool) {
-                Object.entries(tool.handlers).forEach(entry => {
-                    const name = entry[0]
-                    const event = entry[1]
-                    console.log(`Removing '${name}' event listener from ${mapElement}`)
-                    mapElement.removeEventListener(name, event)
-                })
-            }
+    const selectTool = (name) => {
 
-            tool = modes[name]
-            selectedToolElement.innerText = tool.name
-
+        if (tool) {
             Object.entries(tool.handlers).forEach(entry => {
                 const name = entry[0]
                 const event = entry[1]
-                console.log(`Adding '${name}' event listener to ${mapElement}`)
-                mapElement.addEventListener(name, event)
+                console.log(`Removing '${name}' event listener from ${mapElement}`)
+                mapElement.removeEventListener(name, event)
             })
         }
 
-        const selectTexture = (name) => {
-            texture = textures[name]
-        }
-        
-        selectTool("pen")
-        selectTexture("grass")
-        drawLine(context, 0, 0, 980, 600, texture)
-    </script>
+        tool = modes[name]
+        selectedToolElement.innerText = tool.name
+
+        Object.entries(tool.handlers).forEach(entry => {
+            const name = entry[0]
+            const event = entry[1]
+            console.log(`Adding '${name}' event listener to ${mapElement}`)
+            mapElement.addEventListener(name, event)
+        })
+    }
+
+    const selectTexture = (name) => {
+        texture = textures[name]
+    }
+
+    selectTool("pen")
+    selectTexture("grass")
+    drawLine(context, 0, 0, 980, 600, texture)
+</script>
 </body>
 </html>
