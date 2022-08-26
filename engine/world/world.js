@@ -9,6 +9,7 @@ export default class World {
     layers = {}
     terrainLayer
     playerLayer
+    moving = false
 
     constructor(width, height, layers) {
         this.init(width, height, layers).then()
@@ -78,13 +79,14 @@ export default class World {
     }
 
     playerSpriteMove = (sprite, from, to) => {
+        if (this.moving) return
         sprite.x = from.x * 20
         sprite.y = from.y * 20
         const xFrames = to.x - from.x
         const yFrames = to.y - from.y
 
-        let i = 0
 
+        let i = 0
         const int = setInterval(() => {
             if (xFrames !== 0)
                 sprite.x = from.x * 20 + i * xFrames
@@ -94,8 +96,12 @@ export default class World {
                 sprite.y = from.y * 20 + i * yFrames
             else sprite.y = to.y * 20
             i++
-            if (i > 19) clearInterval(int)
+            if (i > 19) {
+                this.moving = false
+                clearInterval(int)
+            }
         }, 25)
+
     }
 
     moveLayers = (direction) => {
@@ -223,6 +229,7 @@ export default class World {
             return
         }
 
+        this.moving = false
         switch (filtered[0]) {
             case "q":
                 this.playerMoveLeft();
