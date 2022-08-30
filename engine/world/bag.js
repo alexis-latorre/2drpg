@@ -33,6 +33,7 @@ export default class Bag {
     }
 
     update = () => {
+        if (this.bagItems) this.bagItems.destroy()
         this.bagItems = new PIXI.Container()
         const items = EventDispatcher.getInstance().dispatch("player.items", "getItems")
 
@@ -51,7 +52,7 @@ export default class Bag {
             });
             const text = new PIXI.Text('x' + item.count, style);
             text.x = sprite.x + 28 - text.width
-            text.y = sprite.y + 8
+            text.y = sprite.y + 18
 
             itemContainer.addChild(sprite)
             itemContainer.addChild(text)
