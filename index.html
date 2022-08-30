@@ -25,10 +25,10 @@
         <section id="south-menu" class="mini-menu">Menu</section>
     </div>
     <aside id="east-menu" class="menu">
-        <button id="secondary">Inventory</button>
-        <button onclick="toggleOpacity('game')">Toggle terrain</button>
-        <button onclick="toggleOpacity('obstacle')">Toggle obstacles</button>
-        <button id="togglePlayer">Toggle player</button>
+        <button id="inventory">Inventory</button>
+        <button id="testButton1">Add yellow_scroll x15</button>
+        <button id="testButton2">Add dead x1</button>
+        <button id="testButton3">Add book x2</button>
     </aside>
 </main>
 <footer>Footer</footer>
@@ -39,17 +39,24 @@
     let game
     let init = false
 
-    const initGame = () => {
+    const initGame = async () => {
         if (init) return
         init = true
         game = new PIXI.Application({ width: 980, height: 600, backgroundAlpha: 0})
 
         const world = new World(49, 30)
+        await world.ready()
+        const dispatcher = world.getEventDispatcher()
 
-        console.log("bg", world.getBackground())
         game.stage.addChild(world.getBackground())
 
         world.getLayers().forEach(layer => {
+            console.log("layer", layer)
+            game.stage.addChild(layer)
+        })
+
+        world.getUiLayers().forEach(layer => {
+            console.log("ui", layer)
             game.stage.addChild(layer)
         })
 
@@ -83,11 +90,18 @@
             }
             currentFrame++
         })
-    }
-
-    const toggleOpacity = (layer) => {
-        const op = document.getElementById(layer).style.opacity
-        document.getElementById(layer).style.opacity = op === "0" ? "1" : "0"
+        document.getElementById("inventory").addEventListener("click", () => {
+            dispatcher.dispatch("player.inventory", "toggle")
+        })
+        document.getElementById("testButton1").addEventListener("click", () => {
+            dispatcher.dispatch("player.items", "add", "yellow_scroll", 15)
+        })
+        document.getElementById("testButton2").addEventListener("click", () => {
+            dispatcher.dispatch("player.items", "add", "dead", 1)
+        })
+        document.getElementById("testButton3").addEventListener("click", () => {
+            dispatcher.dispatch("player.items", "add", "book", 2)
+        })
     }
 
     document.getElementById("initGame").addEventListener("click", initGame)
