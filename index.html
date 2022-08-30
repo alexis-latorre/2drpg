@@ -25,8 +25,8 @@
         <section id="south-menu" class="mini-menu">Menu</section>
     </div>
     <aside id="east-menu" class="menu">
-        <button id="secondary">Inventory</button>
-        <button onclick="toggleOpacity('game')">Toggle terrain</button>
+        <button id="inventory">Inventory</button>
+        <button id="testButton1">Add coal x15</button>
         <button onclick="toggleOpacity('obstacle')">Toggle obstacles</button>
         <button id="togglePlayer">Toggle player</button>
     </aside>
@@ -39,17 +39,24 @@
     let game
     let init = false
 
-    const initGame = () => {
+    const initGame = async () => {
         if (init) return
         init = true
         game = new PIXI.Application({ width: 980, height: 600, backgroundAlpha: 0})
 
         const world = new World(49, 30)
+        await world.ready()
+        const dispatcher = world.getEventDispatcher()
 
-        console.log("bg", world.getBackground())
         game.stage.addChild(world.getBackground())
 
         world.getLayers().forEach(layer => {
+            console.log("layer", layer)
+            game.stage.addChild(layer)
+        })
+
+        world.getUiLayers().forEach(layer => {
+            console.log("ui", layer)
             game.stage.addChild(layer)
         })
 
@@ -82,6 +89,12 @@
                 currentFrame = 0
             }
             currentFrame++
+        })
+        document.getElementById("inventory").addEventListener("click", () => {
+            dispatcher.dispatch("player.inventory", "toggle")
+        })
+        document.getElementById("testButton1").addEventListener("click", () => {
+            dispatcher.dispatch("player.items", "add", "yellow_scroll", 15)
         })
     }
 

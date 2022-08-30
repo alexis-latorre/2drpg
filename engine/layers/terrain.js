@@ -34,10 +34,6 @@ export default class TerrainContainer {
         console.log("Level is loaded")
     }
 
-    getNamedSprite = (name) => {
-        return new PIXI.Sprite(this.sprites[name])
-    }
-
     getSprite = (code) => {
         return new PIXI.Sprite(this.sprites[Object.keys(this.sprites)[code]])
     }
@@ -46,7 +42,7 @@ export default class TerrainContainer {
         try {
             for (let y = -data.width * 2; y < data.width * 2; y++) {
                 for (let x = -data.height * 2; x < data.height * 2; x++) {
-                    const sprite = this.getNamedSprite(data.surroundingTexture)
+                    const sprite = this.getSprite(data.surroundingTexture)
                     sprite.x = x * 20
                     sprite.y = y * 20
                     this.background.addChild(sprite)

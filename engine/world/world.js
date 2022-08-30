@@ -1,21 +1,28 @@
 import Player from "./player";
 import TerrainContainer from "../layers/terrain.js";
 import PlayerContainer from "../layers/player.js";
+import InterfaceContainer from "../layers/interface.js";
 import {Level} from "../../data/levels/levels.js";
+import EventDispatcher from "../core/eventDispatcher.js";
 
 export default class World {
     map
     player
     layers = {}
+    ui = {}
     terrainLayer
     playerLayer
+    interfaceLayer
     moving = false
+    eventDispatcher
+    init = false
 
     constructor(width, height, layers) {
-        this.init(width, height, layers).then()
+        this.initWorld(width, height, layers).then()
     }
 
-    init = async (width, height, layers) => {
+    initWorld = async (width, height) => {
+        this.eventDispatcher = EventDispatcher.getInstance()
         this.map = new Map()
         this.terrainLayer = new TerrainContainer()
         this.layers["bg"] = this.terrainLayer.getBackground()
@@ -27,6 +34,13 @@ export default class World {
         const level = new Level("level2")
         await this.terrainLayer.loadMap(level)
         await this.playerLayer.ready()
+        this.eventDispatcher.register("player.items", this.playerLayer.inventory)
+
+
+        this.interfaceLayer = new InterfaceContainer(this.playerLayer)
+        await this.interfaceLayer.ready()
+        this.ui["interface"] = this.interfaceLayer.getContainer()
+        this.eventDispatcher.register("player.inventory", this.interfaceLayer.bag)
 
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
@@ -37,7 +51,6 @@ export default class World {
         }
 
         this.player = new Player(level.getPlayer().x, level.getPlayer().y)
-        this.ghost = this.clone(this.player)
 
         this.playerLayer.idle().x = this.player.pos.x * 20
         this.playerLayer.idle().y = this.player.pos.y * 20
@@ -46,14 +59,18 @@ export default class World {
             if (obstacle.walkable === false)
                 this.editMap(obstacle.x, obstacle.y, {walkable: obstacle.walkable})
         })
-
-        setInterval(() => {
-            if (!this.player.equals(this.ghost)) {
-                this.editMap(this.player.pos.x, this.player.pos.y, {occupied: true})
-                this.ghost = this.clone(this.player)
-            }
-        }, 50)
+        this.init = true
     }
+
+    ready = () => new Promise((resolve, reject) => {
+        setInterval(() => {
+            if (this.init)
+                resolve(true);
+        }, 100);
+        setTimeout(() => {
+            reject("timeout")
+        }, 10000)
+    })
 
     editMap = (x, y, props) => {
         let initial = this.map.get(`${x}:${y}`)
@@ -69,6 +86,8 @@ export default class World {
     getBackground = () => this.terrainLayer.getBackground()
 
     getLayers = () => Object.values(this.layers)
+
+    getUiLayers = () => Object.values(this.ui)
 
     playerAbsoluteMove = (x, y) => {
         if (this.map.has(`${x}:${y}`) && this.map.get(`${x}:${y}`).walkable) {
@@ -247,4 +266,10 @@ export default class World {
                 break
         }
     }
+
+    toggleInterface = (name) => {
+        this.interfaceLayer.toggle(name)
+    }
+
+    getEventDispatcher = () => this.eventDispatcher
 }
