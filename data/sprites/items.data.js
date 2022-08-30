@@ -830,516 +830,596 @@ export default {
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        apple: {
+        blue_book: {
             frame: {x: 0, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        banana: {
+        red_book: {
             frame: {x: 20, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        peer: {
+        green_book: {
             frame: {x: 40, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        lemon: {
+        yellow_book: {
             frame: {x: 60, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        strawberry: {
+        brown_book: {
             frame: {x: 80, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        grapes: {
+        beige_book: {
             frame: {x: 100, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        carrot: {
+        gold_book: {
             frame: {x: 120, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        corn: {
+        blood_book: {
             frame: {x: 140, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        garlic: {
+        open_book: {
             frame: {x: 160, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        tomato: {
+        enveloppe: {
             frame: {x: 180, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        eggplant: {
+        rolled_scroll: {
             frame: {x: 200, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        chili: {
+        open_scroll: {
             frame: {x: 220, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        mushroom: {
+        treasure_map: {
             frame: {x: 240, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        soft_bread: {
+        dice: {
             frame: {x: 260, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        bread: {
+        playing_card: {
             frame: {x: 280, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        chicken: {
+        bottle: {
             frame: {x: 300, y: 260, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        chicken_thigh: {
+        apple: {
             frame: {x: 0, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        steak: {
+        banana: {
             frame: {x: 20, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        hock: {
+        peer: {
             frame: {x: 40, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        haunch: {
+        lemon: {
             frame: {x: 60, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        shrimp: {
+        strawberry: {
             frame: {x: 80, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        eggs: {
+        grapes: {
             frame: {x: 100, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        egg: {
+        carrot: {
             frame: {x: 120, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        cheese: {
+        corn: {
             frame: {x: 140, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        milk: {
+        garlic: {
             frame: {x: 160, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        honey: {
+        tomato: {
             frame: {x: 180, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        salt: {
+        eggplant: {
             frame: {x: 200, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        pepper: {
+        chili: {
             frame: {x: 220, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        candy: {
+        mushroom: {
             frame: {x: 240, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        cake: {
+        soft_bread: {
             frame: {x: 260, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        coffee: {
+        bread: {
             frame: {x: 280, y: 280, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        fishing_pole: {
+        chicken: {
+            frame: {x: 300, y: 280, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        chicken_thigh: {
             frame: {x: 0, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        hook: {
+        steak: {
             frame: {x: 20, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        worm: {
+        hock: {
             frame: {x: 40, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        fish: {
+        haunch: {
             frame: {x: 60, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        fish_2: {
+        shrimp: {
             frame: {x: 80, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        eel: {
+        eggs: {
             frame: {x: 100, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        surgeonfish: {
+        egg: {
             frame: {x: 120, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        clownfish: {
+        cheese: {
             frame: {x: 140, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        jellyfish: {
+        milk: {
             frame: {x: 160, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        octopuss: {
+        honey: {
             frame: {x: 180, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        turtle: {
+        salt: {
             frame: {x: 200, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        fishbone: {
+        pepper: {
             frame: {x: 220, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        rotten_boot: {
+        candy: {
             frame: {x: 240, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        fossil: {
+        cake: {
             frame: {x: 260, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        rotten_chest: {
+        coffee: {
             frame: {x: 280, y: 300, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        log: {
+        fishing_pole: {
             frame: {x: 0, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        rock: {
+        hook: {
             frame: {x: 20, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        ore: {
+        worm: {
             frame: {x: 40, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        ingot: {
+        fish: {
             frame: {x: 60, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        diamond: {
+        fish_2: {
             frame: {x: 80, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        coton: {
+        eel: {
             frame: {x: 100, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        whool: {
+        surgeonfish: {
             frame: {x: 120, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        parchment: {
+        clownfish: {
             frame: {x: 140, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        skin: {
+        jellyfish: {
             frame: {x: 160, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        fang: {
+        octopuss: {
             frame: {x: 180, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        quill: {
+        turtle: {
             frame: {x: 200, y: 320, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        red_orb: {
+        fishbone: {
+            frame: {x: 220, y: 320, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        rotten_boot: {
+            frame: {x: 240, y: 320, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        fossil: {
+            frame: {x: 260, y: 320, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        rotten_chest: {
+            frame: {x: 280, y: 320, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        log: {
             frame: {x: 0, y: 340, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        blue_orb: {
+        rock: {
             frame: {x: 20, y: 340, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        green_orb: {
+        ore: {
             frame: {x: 40, y: 340, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        yellow_orb: {
+        ingot: {
             frame: {x: 60, y: 340, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        purple_orb: {
+        diamond: {
             frame: {x: 80, y: 340, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        black_orb: {
+        coton: {
             frame: {x: 100, y: 340, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        empty_vial: {
+        whool: {
+            frame: {x: 120, y: 340, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        parchment: {
+            frame: {x: 140, y: 340, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        skin: {
+            frame: {x: 160, y: 340, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        fang: {
+            frame: {x: 180, y: 340, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        quill: {
+            frame: {x: 200, y: 340, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        red_orb: {
             frame: {x: 0, y: 360, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        empty_vial_2: {
+        blue_orb: {
             frame: {x: 20, y: 360, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        empty_vial_3: {
+        green_orb: {
             frame: {x: 40, y: 360, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        empty_vial_4: {
+        yellow_orb: {
             frame: {x: 60, y: 360, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        red_vial: {
+        purple_orb: {
             frame: {x: 80, y: 360, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        blue_vial: {
+        black_orb: {
             frame: {x: 100, y: 360, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        green_vial: {
-            frame: {x: 120, y: 360, w: 20, h: 20},
-            sourceSize: {w: 20, h: 20},
-            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
-        },
-        yellow_vial: {
-            frame: {x: 140, y: 360, w: 20, h: 20},
-            sourceSize: {w: 20, h: 20},
-            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
-        },
-        fire_cauldron: {
-            frame: {x: 160, y: 360, w: 20, h: 20},
-            sourceSize: {w: 20, h: 20},
-            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
-        },
-        cauldron: {
-            frame: {x: 180, y: 360, w: 20, h: 20},
-            sourceSize: {w: 20, h: 20},
-            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
-        },
-        horse: {
-            frame: {x: 200, y: 360, w: 20, h: 20},
-            sourceSize: {w: 20, h: 20},
-            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
-        },
-        plank: {
-            frame: {x: 220, y: 360, w: 20, h: 20},
-            sourceSize: {w: 20, h: 20},
-            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
-        },
-        basket: {
+        empty_vial: {
             frame: {x: 0, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        brown_powder: {
+        empty_vial_2: {
             frame: {x: 20, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        black_powder: {
+        empty_vial_3: {
             frame: {x: 40, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        light_brown_powder: {
+        empty_vial_4: {
             frame: {x: 60, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        orange_powder: {
+        red_vial: {
             frame: {x: 80, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        red_powder: {
+        blue_vial: {
             frame: {x: 100, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        blue_powder: {
+        green_vial: {
             frame: {x: 120, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        light_green_powder: {
+        yellow_vial: {
             frame: {x: 140, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        yellow_powder: {
+        fire_cauldron: {
             frame: {x: 160, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        purple_powder: {
+        cauldron: {
             frame: {x: 180, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        green_powder: {
+        horse: {
             frame: {x: 200, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        white_powder: {
+        plank: {
             frame: {x: 220, y: 380, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        grey_powder: {
-            frame: {x: 240, y: 380, w: 20, h: 20},
-            sourceSize: {w: 20, h: 20},
-            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
-        },
-        hand_sparkles: {
+        basket: {
             frame: {x: 0, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        green_scroll: {
+        brown_powder: {
             frame: {x: 20, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        red_scroll: {
+        black_powder: {
             frame: {x: 40, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        yellow_scroll: {
+        light_brown_powder: {
             frame: {x: 60, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        blue_scroll: {
+        orange_powder: {
             frame: {x: 80, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        purple_scroll: {
+        red_powder: {
             frame: {x: 100, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        orange_scroll: {
+        blue_powder: {
             frame: {x: 120, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        sunrise: {
+        light_green_powder: {
             frame: {x: 140, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        sun: {
+        yellow_powder: {
             frame: {x: 160, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        sunset: {
+        purple_powder: {
             frame: {x: 180, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        moon: {
+        green_powder: {
             frame: {x: 200, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        snowflake: {
+        white_powder: {
             frame: {x: 220, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        hot: {
+        grey_powder: {
             frame: {x: 240, y: 400, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
-        cold: {
-            frame: {x: 260, y: 400, w: 20, h: 20},
+        hand_sparkles: {
+            frame: {x: 0, y: 420, w: 20, h: 20},
             sourceSize: {w: 20, h: 20},
             spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
         },
+        green_scroll: {
+            frame: {x: 20, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        red_scroll: {
+            frame: {x: 40, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        yellow_scroll: {
+            frame: {x: 60, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        blue_scroll: {
+            frame: {x: 80, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        purple_scroll: {
+            frame: {x: 100, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        orange_scroll: {
+            frame: {x: 120, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        sunrise: {
+            frame: {x: 140, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        sun: {
+            frame: {x: 160, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        sunset: {
+            frame: {x: 180, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        moon: {
+            frame: {x: 200, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        snowflake: {
+            frame: {x: 220, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        hot: {
+            frame: {x: 240, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        },
+        cold: {
+            frame: {x: 260, y: 420, w: 20, h: 20},
+            sourceSize: {w: 20, h: 20},
+            spriteSourceSize: {x: 0, y: 0, w: 20, h: 20}
+        }
     },
     meta: {
         image: 'assets/sprites/items/items.png',
